@@ -12,6 +12,7 @@ public class JoyconDemo : MonoBehaviour {
     public Vector3 accel;
     public int jc_ind = 0;
     public Quaternion orientation;
+    public Vector3 direction;
 
     void Start ()
     {
@@ -79,6 +80,16 @@ public class JoyconDemo : MonoBehaviour {
 				gameObject.GetComponent<Renderer>().material.color = Color.blue;
 			}
             gameObject.transform.rotation = orientation;
+
+           /* if (j.GetAccel().y > 0.35 && j.GetAccel().z > -1.1 && j.GetAccel().x > -0.03)
+            {
+	            
+	            direction = j.GetAccel();
+	            gameObject.transform.position = direction;
+            }*/
+            
+            /*direction = j.GetAccel();
+            gameObject.transform.position = direction;*/
         }
     }
 }
