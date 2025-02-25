@@ -79,17 +79,28 @@ public class JoyconDemo : MonoBehaviour {
 			} else{
 				gameObject.GetComponent<Renderer>().material.color = Color.blue;
 			}
-            gameObject.transform.rotation = orientation;
 
-           /* if (j.GetAccel().y > 0.35 && j.GetAccel().z > -1.1 && j.GetAccel().x > -0.03)
-            {
-	            
-	            direction = j.GetAccel();
-	            gameObject.transform.position = direction;
-            }*/
-            
-            /*direction = j.GetAccel();
-            gameObject.transform.position = direction;*/
+			//if(orientation.y > )
+			gameObject.transform.rotation = orientation
+			* Quaternion.Euler(Vector3.up * 90);
+
+			/* if (j.GetAccel().y > 0.35 && j.GetAccel().z > -1.1 && j.GetAccel().x > -0.03)
+			 {
+
+				 direction = j.GetAccel();
+				 gameObject.transform.position = direction;
+			 }*/
+
+			/*direction = j.GetAccel();
+			gameObject.transform.position = direction;*/
         }
     }
+    
+    /*public Quaternion TranslateGyro(Quaternion CRotation)
+    {
+	    Quaternion ORoation = new Quaternion();
+	    
+	    
+	    return ORoation;
+    }*/
 }
