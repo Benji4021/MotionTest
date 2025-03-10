@@ -71,3 +71,63 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Backup files
+*~
+*.bak
+
+# Logs
+*.log
+
+# Compiled files
+*.dll
+*.exe
+*.so
+*.dylib
+*.class
+*.jar
+*.o
+*.obj
+*.lib
+*.a
+*.pdb
+*.exp
+*.idb
+*.ilk
+*.ncb
+*.sdf
+*.ipch
+*.aps
+*.pch
+*.res
+*.gch
+*.swp
+
+# Build artifacts
+build/
+[Bb]in/
+[Dd]ebug/
+[Rr]elease/
+
+# Python bytecode
+*.pyc
+*.pyo
+
+# System files
+Thumbs.db
+Desktop.ini
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+*.sublime-project
+*.sublime-workspace
+*.vscode/
+
+# Miscellaneous
+*.tlog
+*.log
+*.ilk
+*.sbr
+*.exp
+*.pdb
