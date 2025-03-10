@@ -131,3 +131,9 @@ Desktop.ini
 *.sbr
 *.exp
 *.pdb
+
+# Unity specific ignores
+/[Aa]ssets/Scenes/*/LightingData.asset
+/[Aa]ssets/Scenes/*.unity
+/[Pp]roject[Ss]ettings/SceneTemplateSettings.json
+/[Uu]ser[Ss]ettings/Layouts/*.dwlt
