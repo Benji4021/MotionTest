@@ -14,6 +14,9 @@ public class JoyconDemo : MonoBehaviour {
     public Quaternion orientation;
     public Vector3 direction;
 
+    // Smoothing factor for rotation
+    public float rotationSmoothing = 0.1f;
+
     void Start ()
     {
         gyro = new Vector3(0, 0, 0);
@@ -74,33 +77,24 @@ public class JoyconDemo : MonoBehaviour {
             accel = j.GetAccel();
 
             orientation = j.GetVector();
+
 			if (j.GetButton(Joycon.Button.DPAD_UP)){
 				gameObject.GetComponent<Renderer>().material.color = Color.red;
 			} else{
 				gameObject.GetComponent<Renderer>().material.color = Color.blue;
 			}
 
-			//if(orientation.y > )
-			gameObject.transform.rotation = orientation
-			* Quaternion.Euler(Vector3.up * 90);
+			// Adjust the orientation to match Unity's coordinate system
+			// Swap Y and Z axes and invert Z to convert from Joycon's right-handed to Unity's left-handed coordinate system
+			Quaternion adjustedOrientation = new Quaternion(
+				orientation.x,  // X remains the same
+				orientation.y,  // Y becomes Z
+				-orientation.z, // Z becomes -Y
+				orientation.w   // W remains the same
+			);
 
-			/* if (j.GetAccel().y > 0.35 && j.GetAccel().z > -1.1 && j.GetAccel().x > -0.03)
-			 {
-
-				 direction = j.GetAccel();
-				 gameObject.transform.position = direction;
-			 }*/
-
-			/*direction = j.GetAccel();
-			gameObject.transform.position = direction;*/
+			// Smoothly interpolate towards the target rotation
+			gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, adjustedOrientation, rotationSmoothing);
         }
     }
-    
-    /*public Quaternion TranslateGyro(Quaternion CRotation)
-    {
-	    Quaternion ORoation = new Quaternion();
-	    
-	    
-	    return ORoation;
-    }*/
 }
