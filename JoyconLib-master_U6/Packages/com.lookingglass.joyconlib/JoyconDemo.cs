@@ -9,6 +9,7 @@ public class JoyconDemo : MonoBehaviour {
     // Values made available via Unity
     public float[] stick;
     public Vector3 gyro;
+    public Vector3 calibration;
     public Vector3 accel;
     public int jc_ind = 0;
     public Quaternion orientation;
@@ -43,7 +44,8 @@ public class JoyconDemo : MonoBehaviour {
             
 				// Joycon has no magnetometer, so it cannot accurately determine its yaw value. Joycon.Recenter allows the user to reset the yaw value.
 				j.Recenter ();
-			}
+				calibration = j.GetGyro();
+            }
 			// GetButtonDown checks if a button has been released
 			if (j.GetButtonUp (Joycon.Button.SHOULDER_2))
 			{
@@ -71,7 +73,7 @@ public class JoyconDemo : MonoBehaviour {
             stick = j.GetStick();
 
             // Gyro values: x, y, z axis values (in radians per second)
-            gyro = j.GetGyro();
+            gyro = j.GetGyro() - calibration;
 
             // Accel values:  x, y, z axis values (in Gs)
             accel = j.GetAccel();
