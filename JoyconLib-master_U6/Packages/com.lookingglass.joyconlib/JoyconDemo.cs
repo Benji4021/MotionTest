@@ -13,6 +13,9 @@ public class JoyconDemo : MonoBehaviour {
     public int jc_ind = 0;
     public Quaternion orientation;
     public Vector3 direction;
+    private Quaternion adjustedOrientation;
+    [SerializeField]
+    private bool front_perspective;
 
     // Smoothing factor for rotation
     public float rotationSmoothing = 0.1f;
@@ -83,16 +86,31 @@ public class JoyconDemo : MonoBehaviour {
 			} else{
 				gameObject.GetComponent<Renderer>().material.color = Color.blue;
 			}
-
+			
+			
+			//Rücken perspektive
 			// Adjust the orientation to match Unity's coordinate system
 			// Swap Y and Z axes and invert Z to convert from Joycon's right-handed to Unity's left-handed coordinate system
-			Quaternion adjustedOrientation = new Quaternion(
-				orientation.x,  // X remains the same
-				orientation.y,  // Y becomes Z
-				-orientation.z, // Z becomes -Y
-				orientation.w   // W remains the same
+			adjustedOrientation = new Quaternion(
+				orientation.x,  
+				-orientation.z, // Swap Z and Y correctly
+				orientation.y,  
+				orientation.w
 			);
+			
+			if (front_perspective) // if für verschiedene Kameraansichten, warscheinlich besser mit switch als if
+			{
+				//gegenüber perspektive
+				// Assuming the camera is rotated 180 degrees
+				Quaternion cameraRotation = Quaternion.Euler(0, 180, 180); // 180-degree rotation on the Y-axis
 
+				// Apply camera rotation to adjusted orientation
+				adjustedOrientation = cameraRotation * adjustedOrientation;
+				
+			}
+
+			
+			
 			// Smoothly interpolate towards the target rotation
 			gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, adjustedOrientation, rotationSmoothing);
         }
