@@ -15,7 +15,7 @@ public class JoyconDemo : MonoBehaviour {
     public Vector3 direction;
 
     // Smoothing factor for rotation
-    public float rotationSmoothing = 0.3f;
+    public float rotationSmoothing = 0.1f;
 
     void Start ()
     {
@@ -43,11 +43,7 @@ public class JoyconDemo : MonoBehaviour {
             
 				// Joycon has no magnetometer, so it cannot accurately determine its yaw value. Joycon.Recenter allows the user to reset the yaw value.
 				j.Recenter ();
-<<<<<<< HEAD
 			}
-=======
-            }
->>>>>>> eb8ae1e (Maxl commit)
 			// GetButtonDown checks if a button has been released
 			if (j.GetButtonUp (Joycon.Button.SHOULDER_2))
 			{
