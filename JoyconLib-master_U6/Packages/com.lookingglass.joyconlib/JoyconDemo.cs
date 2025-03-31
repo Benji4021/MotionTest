@@ -13,6 +13,12 @@ public class JoyconDemo : MonoBehaviour {
     public int jc_ind = 0;
     public Quaternion orientation;
     public Vector3 direction;
+    private Quaternion adjustedOrientation;
+    [SerializeField]
+    private bool front_perspective;
+
+    // Smoothing factor for rotation
+    public float rotationSmoothing = 0.1f;
 
     void Start ()
     {
@@ -74,33 +80,39 @@ public class JoyconDemo : MonoBehaviour {
             accel = j.GetAccel();
 
             orientation = j.GetVector();
+
 			if (j.GetButton(Joycon.Button.DPAD_UP)){
 				gameObject.GetComponent<Renderer>().material.color = Color.red;
 			} else{
 				gameObject.GetComponent<Renderer>().material.color = Color.blue;
 			}
+			
+			
+			//Rücken perspektive
+			// Adjust the orientation to match Unity's coordinate system
+			// Swap Y and Z axes and invert Z to convert from Joycon's right-handed to Unity's left-handed coordinate system
+			adjustedOrientation = new Quaternion(
+				orientation.x,  
+				-orientation.z, // Swap Z and Y correctly
+				orientation.y,  
+				orientation.w
+			);
+			
+			if (front_perspective) // if für verschiedene Kameraansichten, warscheinlich besser mit switch als if
+			{
+				//gegenüber perspektive
+				// Assuming the camera is rotated 180 degrees
+				Quaternion cameraRotation = Quaternion.Euler(0, 180, 180); // 180-degree rotation on the Y-axis
 
-			//if(orientation.y > )
-			gameObject.transform.rotation = orientation
-			* Quaternion.Euler(Vector3.up * 90);
+				// Apply camera rotation to adjusted orientation
+				adjustedOrientation = cameraRotation * adjustedOrientation;
+				
+			}
 
-			/* if (j.GetAccel().y > 0.35 && j.GetAccel().z > -1.1 && j.GetAccel().x > -0.03)
-			 {
-
-				 direction = j.GetAccel();
-				 gameObject.transform.position = direction;
-			 }*/
-
-			/*direction = j.GetAccel();
-			gameObject.transform.position = direction;*/
+			
+			
+			// Smoothly interpolate towards the target rotation
+			gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, adjustedOrientation, rotationSmoothing);
         }
     }
-    
-    /*public Quaternion TranslateGyro(Quaternion CRotation)
-    {
-	    Quaternion ORoation = new Quaternion();
-	    
-	    
-	    return ORoation;
-    }*/
 }
