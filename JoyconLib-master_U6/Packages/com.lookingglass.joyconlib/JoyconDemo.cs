@@ -16,6 +16,7 @@ public class JoyconDemo : MonoBehaviour {
     private Quaternion adjustedOrientation;
     [SerializeField]
     private bool front_perspective;
+    public Vector3 adjustedAcceleration;
 
     // Smoothing factor for rotation
     public float rotationSmoothing = 0.1f;
@@ -108,11 +109,20 @@ public class JoyconDemo : MonoBehaviour {
 				adjustedOrientation = cameraRotation * adjustedOrientation;
 				
 			}
-
-			
 			
 			// Smoothly interpolate towards the target rotation
 			gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, adjustedOrientation, rotationSmoothing);
+
+			
+			//gameObject.transform.position = j.GetAccel() * 10;
+			adjustedAcceleration = new Vector3();
+				adjustedAcceleration.Set(
+				j.GetAccel().x,
+				-j.GetAccel().z, // Swap Z and Y correctly
+				j.GetAccel().y
+			);
+			gameObject.transform.position = adjustedAcceleration;
+			
         }
     }
 }

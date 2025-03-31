@@ -540,9 +540,10 @@ public class Joycon
             PollThreadObj.Start();
         }
     }
-    public void Recenter()
+    public Vector3 Recenter()
     {
         first_imu_packet = true;
+        return Vector3.zero;
     }
     private float[] CenterSticks(UInt16[] vals)
     {
