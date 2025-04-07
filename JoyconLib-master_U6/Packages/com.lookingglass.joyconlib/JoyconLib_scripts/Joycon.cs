@@ -491,6 +491,21 @@ public class Joycon
 
             if (first_imu_packet)
             {
+                /*
+                Maybe for Recalibration
+                
+                // Reset accumulated gyro drift
+                sum[0] = 0;
+                sum[1] = 0;
+                sum[2] = 0;
+
+                // Reset gyroscope neutral position
+                gyr_neutral[0] = gyr_r[0];
+                gyr_neutral[1] = gyr_r[1];
+                gyr_neutral[2] = gyr_r[2];
+                */
+
+                // Reset the IMU frame of reference
                 i_b = new Vector3(1, 0, 0);
                 j_b = new Vector3(0, 1, 0);
                 k_b = new Vector3(0, 0, 1);
@@ -500,8 +515,8 @@ public class Joycon
             {
                 k_acc = -Vector3.Normalize(acc_g);
                 w_a = Vector3.Cross(k_b, k_acc);
-                w_g = -gyr_g * dt_sec;
-                d_theta = (filterweight * w_a + w_g) / (1f + filterweight);
+                w_g = -gyr_g * (dt_sec * 0.98f); // Reduce gyro noise
+                d_theta = (filterweight * w_a + w_g) / (1.02f + filterweight); // Reduce drift slowly
                 k_b += Vector3.Cross(d_theta, k_b);
                 i_b += Vector3.Cross(d_theta, i_b);
                 j_b += Vector3.Cross(d_theta, j_b);
@@ -525,9 +540,10 @@ public class Joycon
             PollThreadObj.Start();
         }
     }
-    public void Recenter()
+    public Vector3 Recenter()
     {
         first_imu_packet = true;
+        return Vector3.zero;
     }
     private float[] CenterSticks(UInt16[] vals)
     {
