@@ -15,8 +15,10 @@ public class JoyconDemo : MonoBehaviour {
     public Vector3 direction;
     private Quaternion adjustedOrientation;
     [SerializeField]
-    private bool front_perspective;
-    public Vector3 adjustedAcceleration;
+    bool front_perspective;
+    private Vector3 adjustedAcceleration;
+    private Vector3 defaultDirection;
+    
 
     // Smoothing factor for rotation
     public float rotationSmoothing = 0.1f;
@@ -30,6 +32,8 @@ public class JoyconDemo : MonoBehaviour {
 		if (joycons.Count < jc_ind+1){
 			Destroy(gameObject);
 		}
+		
+		defaultDirection.Set(0.094f, 1.011f, -0.03f);
 	}
 
     // Update is called once per frame
@@ -47,6 +51,8 @@ public class JoyconDemo : MonoBehaviour {
             
 				// Joycon has no magnetometer, so it cannot accurately determine its yaw value. Joycon.Recenter allows the user to reset the yaw value.
 				gameObject.transform.position = j.Recenter ();
+				
+				
 			}
 			// GetButtonDown checks if a button has been released
 			if (j.GetButtonUp (Joycon.Button.SHOULDER_2))
@@ -115,14 +121,16 @@ public class JoyconDemo : MonoBehaviour {
 
 			
 			//gameObject.transform.position = j.GetAccel() * 10;
-			adjustedAcceleration = new Vector3();
-				adjustedAcceleration.Set(
+	        adjustedAcceleration.Set(
 				j.GetAccel().x,
 				-j.GetAccel().z, // Swap Z and Y correctly
 				j.GetAccel().y
 			);
-			gameObject.transform.position = adjustedAcceleration;
-			
+	        if (adjustedAcceleration.magnitude > 0.5f)
+	        {
+		        gameObject.transform.position = adjustedAcceleration - defaultDirection;//+= villeicth wenn das offset nicht so schlimm ist
+
+	        }
         }
     }
 }

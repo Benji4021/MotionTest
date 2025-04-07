@@ -5,6 +5,7 @@ fetchPreview = true
 defaultFlags = 0
 keepOpen = true
 queryFolder = "Assets"
+
 onBoardingDoNotAskAgain = false
 showPackageIndexes = false
 showStatusBar = false
@@ -13,6 +14,7 @@ scopes = {
 	"picker_visibility_flags.075BCD15" = "264"
 	"picker_item_size.075BCD15" = "96"
 	"picker_inspector.075BCD15" = "0"
+
 }
 providers = {
 	asset = {
