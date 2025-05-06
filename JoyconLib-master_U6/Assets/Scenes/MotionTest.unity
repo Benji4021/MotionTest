@@ -541,6 +541,7 @@ GameObject:
   - component: {fileID: 1558791405}
   - component: {fileID: 1558791410}
   - component: {fileID: 1558791411}
+  - component: {fileID: 1558791412}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -663,15 +664,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 552ad7fcf6ee2e64ea9e27e6e051f0a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jc_ind: 0
   stick: []
   gyro: {x: 0, y: 0, z: 0}
   accel: {x: 0, y: 0, z: 0}
-  jc_ind: 0
   orientation: {x: 0, y: 0, z: 0, w: 0}
   direction: {x: 0, y: 0, z: 0}
-  front_perspective: 0
-  adjustedAcceleration: {x: 0, y: 0, z: 0}
+  finalAccel: {x: 0, y: 0, z: 0}
   rotationSmoothing: 0.1
+  front_perspective: 0
+--- !u!114 &1558791412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1558791404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e4c99335528c74587941d60fd02615, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  JM: {fileID: 1558791411}
+  SodaLvL: 0
+  sensitivity: 25
+  threshold: 150
 --- !u!1 &1851797670
 GameObject:
   m_ObjectHideFlags: 0
